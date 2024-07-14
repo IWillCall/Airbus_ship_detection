@@ -193,7 +193,7 @@ def compile_model(model, learning_rate=0.001):
 
 After 10 epochs, we managed to achieve a dice coefficient of 55%.
 Results of testing the model's predictions:
-![](model_predictions.png)
+![](illustrations/model_predictions.png)
 
 We can see that the model recognizes medium-sized ships fairly well but has problems with small and large ships. Further analysis also showed that the model poorly recognizes ships in conditions of impaired visibility (fog and clouds).
 
