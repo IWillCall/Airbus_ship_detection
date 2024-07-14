@@ -14,12 +14,14 @@ Python: TensorFlow & Keras, OpenCV, Scikit-learn, NumPy, Pandas, Matplotlib, Sea
 
 The model uses a standard **U-NET** architecture, with **Cross-entropy** as the loss function and **Dice score** as the accuracy metric.
 
-## Структура проекту
+## Project structure
 
-- [EDA.ipynb](./EDA.ipynb): Exploratory Data Analysis of the dataset
+- [EDA.ipynb](visualisations/EDA.ipynb): Exploratory Data Analysis of the dataset
 - [model_train.py](./model_train.py): Script for training the model
-- [inference.py](./inference.py): Model inference script that creates masks based on input images
-- [model_predictions_visualization.ipynb](./model_predictions_visualization.ipynb): Testing the model's performance with visualization of generated masks
+- [inference.py](inference/inference.py): Model inference script that creates masks based on input images
+- [model_predictions_visualization.ipynb](visualisations/model_predictions_visualization.ipynb): Testing the model's performance with visualization of generated masks
+
+The model can be downloaded from Google Drive - [unet_model.h5](https://drive.google.com/file/d/1f9Mi1IvinyMAT06aXypBDbCZT7rmJ3fZ/view?usp=sharing)
 
 ## Dataset
 
@@ -50,7 +52,7 @@ The imbalance within images is also important. We have only two classes: backgro
 
 I found that in most cases, only 0.02% of pixels (or 1:3500 pixels) belong to the ship class, which represents a significant imbalance.
 
-> If one tries to recall what is the loss function that should be used for strongly unbalanced data set, it is [Focal loss](https://arxiv.org/abs/1708.02002v2), which revolutionized one stage object localization method in 2017. This loss function demonstrates amazing results on datasets with unbalance level 1:10-1000. , що показала свою високу еффективність в умовах подібних дизбалансів. - [IAFOSS](https://www.kaggle.com/code/iafoss/unet34-dice-0-87)
+> If one tries to recall what is the loss function that should be used for strongly unbalanced data set, it is [Focal loss](https://arxiv.org/abs/1708.02002v2), which revolutionized one stage object localization method in 2017. This loss function demonstrates amazing results on datasets with unbalance level 1:10-1000. - [IAFOSS](https://www.kaggle.com/code/iafoss/unet34-dice-0-87)
 
 Small-sized images are often damaged or carry little information. After checking several sets of images, I concluded that this statement is also true for this dataset. Images smaller than 50KB make up only 1% of the total dataset. Their loss will not lead to a significant reduction in training data volume, but may improve overall data quality.
 
@@ -63,7 +65,7 @@ During the EDA, I reached the following conclusions:
 5. Within the images themselves, there is a significant class imbalance, with more than 99% of pixels being background.
 6. Images of 50kb or less make up 1% of the entire dataset, and some of these are damaged.
 
-I've omitted some details that can be viewed in the [EDA.ipynb](EDA.ipynb) file.
+I've omitted some details that can be viewed in the [EDA.ipynb](visualisations/EDA.ipynb) file.
 
 ## Model Training
 
@@ -230,3 +232,5 @@ pip install -r requirements.txt
 ```
 python inference.py
 ```
+
+The file [requirements.txt](/inference/requirements.txt) can be found in the [inference](/inference/) folder
