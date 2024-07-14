@@ -14,12 +14,14 @@ Python: TensorFlow & Keras, OpenCV, Scikit-learn, NumPy, Pandas, Matplotlib, Sea
 
 The model uses a standard **U-NET** architecture, with **Cross-entropy** as the loss function and **Dice score** as the accuracy metric.
 
-## Структура проекту
+## Project structure
 
-- [EDA.ipynb](./EDA.ipynb): Exploratory Data Analysis of the dataset
+- [EDA.ipynb](visualisations/EDA.ipynb): Exploratory Data Analysis of the dataset
 - [model_train.py](./model_train.py): Script for training the model
-- [inference.py](./inference.py): Model inference script that creates masks based on input images
-- [model_predictions_visualization.ipynb](./model_predictions_visualization.ipynb): Testing the model's performance with visualization of generated masks
+- [inference.py](inference/inference.py): Model inference script that creates masks based on input images
+- [model_predictions_visualization.ipynb](visualisations/model_predictions_visualization.ipynb): Testing the model's performance with visualization of generated masks
+
+The model can be downloaded from Google Drive - [unet_model.h5](https://drive.google.com/file/d/1f9Mi1IvinyMAT06aXypBDbCZT7rmJ3fZ/view?usp=sharing)
 
 ## Dataset
 
@@ -63,7 +65,7 @@ During the EDA, I reached the following conclusions:
 5. Within the images themselves, there is a significant class imbalance, with more than 99% of pixels being background.
 6. Images of 50kb or less make up 1% of the entire dataset, and some of these are damaged.
 
-I've omitted some details that can be viewed in the [EDA.ipynb](EDA.ipynb) file.
+I've omitted some details that can be viewed in the [EDA.ipynb](visualisations/EDA.ipynb) file.
 
 ## Model Training
 
@@ -230,3 +232,5 @@ pip install -r requirements.txt
 ```
 python inference.py
 ```
+
+The file [requirements.txt](/inference/requirements.txt) can be found in the [inference](/inference/) folder
