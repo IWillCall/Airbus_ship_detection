@@ -27,6 +27,20 @@ The model can be downloaded from Google Drive - [unet_model.h5](https://drive.go
 
 The dataset contains about 193,000 satellite images sized 768x768 in .jpg format. Many images do not contain ships, while some contain clusters of ships. The images also include challenging visibility conditions such as fog or clouds.
 
+The training dataset also included a table with image names and their corresponding masks encoded using RLE:
+
+![](illustrations/segmentation_table.png)
+
+## Solution High-Level Overview
+
+According to the task conditions, we have only 2 classes: ships and background. Therefore, this is an example of binary classification.
+
+Since the data was labeled only in the form of masks, the most obvious approach to solving the task is a semantic segmentation model. As we are dealing with satellite images,[U-NET](https://arxiv.org/pdf/1505.04597) is an excellent architecture due to its ability to preserve fine details. Although we could also consider applying [DeepLab](https://arxiv.org/pdf/1606.00915)
+
+If the ships were labeled in the form of boxes, we could consider using [SSD](https://arxiv.org/pdf/1512.02325) with [ rotated boxes](https://arxiv.org/pdf/1711.09405), which is also a great option for object detection in satellite images.
+
+Nevertheless, the dataset notation indicates that there are no overlapping boxes in the images, which significantly simplifies the task.
+
 ## EDA
 
 During the EDA, I investigated three main questions: class balance in the dataset, characteristics of image appearances and their masks, and the impact of image size on quality.
@@ -42,6 +56,8 @@ During the EDA, I investigated three main questions: class balance in the datase
 
 The competition rules stated that many images do not contain ships, but didn't specify an exact number. During the analysis, I found that only 22% (43,000) of the images contain ships. Leaving this imbalance in the training dataset could potentially cause the model to learn to ignore ships and achieve high accuracy by recognizing "empty" images.
 
+![](illustrations/pie_chart.png)
+
 Images containing ships also varied in the number of ships present. I plotted the distribution of images by the number of ships they contain:
 
 ![](illustrations/DIstribution_by_ships_amount.png)
@@ -55,6 +71,10 @@ I found that in most cases, only 0.02% of pixels (or 1:3500 pixels) belong to th
 > If one tries to recall what is the loss function that should be used for strongly unbalanced data set, it is [Focal loss](https://arxiv.org/abs/1708.02002v2), which revolutionized one stage object localization method in 2017. This loss function demonstrates amazing results on datasets with unbalance level 1:10-1000. - [IAFOSS](https://www.kaggle.com/code/iafoss/unet34-dice-0-87)
 
 Small-sized images are often damaged or carry little information. After checking several sets of images, I concluded that this statement is also true for this dataset. Images smaller than 50KB make up only 1% of the total dataset. Their loss will not lead to a significant reduction in training data volume, but may improve overall data quality.
+
+![](illustrations/distribution_by_imgsize.png)
+
+### Conclusions
 
 During the EDA, I reached the following conclusions:
 
